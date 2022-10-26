@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Я отгадаю твой возраст!</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+	<style type="text/css">
+		/*задаём общие параметры для всей страницы: шрифт и отступы*/
+		body {
+		  text-align: center;
+		  font-family: 'Montserrat', sans-serif;
+		  
+		}
+		h1 {
+		  font-size: 20px;
+		  font-weight: bold;
+		}
+
+		p {
+		  font-size: 20px;
+		  font-weight: bold;
+		}
+
+		/* внешний вид кнопок */
+		button{
+		font-family: 'Montserrat', sans-serif;
+		  font-size: 16px;
+		  margin: 5px;
+		  font-weight: bold;
+		  width: 188px;
+  		  background:rgb(255, 255, 255); 
+  		  color:rgb(0, 0, 0); 
+		  padding:5px; 
+  		  border-radius:5px; 
+          transition: all 0.3s 0.01s ease; 
+		}
+		button:hover {
+  		  background:#bbf0a6;
+		}
+
+		.ages {
+		margin: 0 auto;
+		width: 350px;
+		height: 150px;
+		padding: 30px 30px;
+  		margin-top: 30px;
+		background-image: url("fon.jpg");
+		border: 3px solid #585858;
+		background-size:410px 210px;
+  		justify-content: center;
+		}
+
+		.notOnScreen{
+			display: none;
+		}	
+		#small{
+			width: 100px;
+		}
+		#bingo{
+			width: 100px;
+		}
+		#big{
+			width: 100px;
+		}
+
+		#fin{
+		margin: 0;
+		font-size: 36px;
+		color: rgb(204, 0, 0);
+		}
+		
+	</style>
+
+</head>
+<body>
+<div class="ages">
+	<h1 id="startText">Я отгадаю твой возраст <br>за 7 попыток!</h1>
+	<button onclick="start()" id="startButton">Ну, попробуй!</button>
+	<p id="question"></p>
+	<p id="nums"></p>
+	<h3 id="fin"></h3>
+	<button id="small" onclick="smallClick()" class="notOnScreen">Меньше</button>
+	<button id="bingo" onclick="bingoClick()" class="notOnScreen">Угадал!</button>
+	<button id="big" onclick="bigClick()" class="notOnScreen">Больше</button>
+
+	<script>
+		var min = 1;
+		var max = 100;
+
+		var middle = Math.floor((min + max)/2);
+
+		var stage = 1;
+
+		function start() {
+			document.getElementById("startText").classList.add("notOnScreen");
+			document.getElementById("startButton").classList.add("notOnScreen");
+
+			document.getElementById("question").classList.remove("notOnScreen");
+			document.getElementById("question").innerHTML = "Попытка " + stage + ": ";
+			document.getElementById("nums").innerHTML = middle;
+
+			document.getElementById("small").classList.remove("notOnScreen");
+			document.getElementById("bingo").classList.remove("notOnScreen");
+			document.getElementById("big").classList.remove("notOnScreen");
+		}
+
+		function smallClick() {
+			max = middle;
+			middle = Math.floor((min + max)/2);
+
+			if (max == middle) {
+				middle -= 1;
+			}
+			checkGame();
+		}
+
+		function bigClick() {
+			min = middle;
+			middle = Math.floor((min + max)/2);
+
+			if (min == middle) {
+				middle += 1;
+			}
+			checkGame();
+		}
+
+		function bingoClick() {
+			max = middle;
+			min = middle;
+			checkGame();
+		}
+	  	
+	  	function checkGame() {
+			if (min == max){
+			 	document.getElementById("question").innerHTML = "Твой возраст:";
+				document.getElementById("fin").innerHTML = +min;
+			
+				document.getElementById("small").classList.add("notOnScreen");
+				document.getElementById("bingo").classList.add("notOnScreen");
+				document.getElementById("big").classList.add("notOnScreen");
+				document.getElementById("nums").classList.add("notOnScreen");
+
+
+			 	return;
+			}
+
+			stage += 1;
+			if (stage == 8){
+				// сообщение об ошибке
+				qq="<img  src='111.jpg' style='width:300; height:200'> "
+				document.getElementById("fin").innerHTML = qq;
+				document.getElementById("small").classList.add("notOnScreen");
+				document.getElementById("bingo").classList.add("notOnScreen");
+				document.getElementById("big").classList.add("notOnScreen");
+				document.getElementById("nums").classList.add("notOnScreen");
+				document.getElementById("question").classList.add("notOnScreen");
+				
+			}
+
+			document.getElementById("question").innerHTML = "Попытка " + stage + ": ";
+			document.getElementById("nums").innerHTML = middle;
+	    }
+	  
+	</script>
+</div>
+</body>
+</html>
